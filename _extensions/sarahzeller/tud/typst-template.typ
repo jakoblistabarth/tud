@@ -2,7 +2,8 @@
 	title: none,
 	subtitle: none,
 	author: none,
-	date: datetime.today(),
+	occasion: none,
+	date-raw: datetime.today(),
 	beamer-format: (16, 9),
 	theme-background: rgb("#00305D"),
 	theme-text: white,
@@ -17,6 +18,9 @@
 
 	let theme-muted = theme-background.lighten(75%)
 	let margin = (x: 2em, y: 4em);
+
+	let date = if (type(date-raw) == str) {
+		toml(bytes("date = " + date-raw)).date } else { date-raw }
 
 	let background(color: theme-background) = (
 		place(top + left, dx: - margin.x, dy: - margin.y)[
@@ -105,7 +109,7 @@
 				set align(horizon)
 				grid(columns: (auto, auto, 1fr), rows: 2.5em, gutter: 1em, ..(
 					box(image("_extensions/sarahzeller/tud/TU_Dresden_Logo_blau.svg", height: 2.5em)),
-					[ #author #sym.dot.op #title],
+					[ #author #if (occasion != none) [· #occasion] #sym.dot.op #title],
 					counter(page).display(
 						"1 · 1",
 						both: true,
@@ -162,7 +166,13 @@
 			#v(2em)
 			#text(size: 25pt, author)
 			#linebreak()
-			#text(size: 15pt, date.display("[day].[month].[year]"))
+			#text(size: 15pt)[
+				#if (occasion != none) {
+					occasion
+					linebreak()
+				}
+				#date.display("[day].[month].[year]")
+			]
 	]
 	pagebreak(weak: true)
 	counter(page).update(1)

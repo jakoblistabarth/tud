@@ -19,11 +19,14 @@
   $if(subtitle)$
    subtitle: [$subtitle$],
   $endif$
+  $if(occasion)$
+   occasion: [$occasion$],
+  $endif$
   $if(author)$
    author: "$author$",
   $endif$
   $if(date)$
-   date: [$date$],
+   date-raw: "$date$",
   $endif$
   $if(beamer_format)$
     beamer-format: ($beamer_format$),
