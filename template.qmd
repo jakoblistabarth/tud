@@ -1,7 +1,9 @@
 ---
 author: Sarah Zeller
 title: Awesome presentation
-subtitle: Cool seminar
+subtitle: Mangnificent subtitle
+occasion: Marvelous conference
+date: 2060-06-11
 format:
   tud-typst:
     has_section_slides: false
