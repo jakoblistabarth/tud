@@ -53,15 +53,28 @@
 			#let sections = query(heading.where(level: 1))
 			#let offset = if (has-section-slides) { 1 } else { 0 }
 			#let link-offset = if (has-section-slides) { 0 } else { 1 }
-			#let sectionsWithPages = sections.enumerate(start: 1).map(((i, s)) => {(
-					let start = counter(page).at(s.location()).first() + offset,
-					let stop = if (i < sections.len()) {
-						counter(page).at(sections.at(i).location()).first()
-					} else {
-						counter(page).final().first() + offset
-					},
-					return (pageRange: range(start, stop), label: s.body)
-			)})
+			
+			// find marker page (if any)
+			#let stop-page = {
+				let nodes = query(<pagination-stop>)
+				if nodes.len() > 0 {
+					counter(page).at(nodes.first().location()).first()
+				} else {
+					none
+				}
+			}
+
+			#let sectionsWithPages = sections.enumerate(start: 1).map(((i, s)) => {
+				let start = counter(page).at(s.location()).first() + offset
+				let stop-raw = if (i < sections.len()) {
+					counter(page).at(sections.at(i).location()).first()
+				} else {
+					counter(page).final().first() + offset
+				}
+				let stop = if (stop-page != none) { calc.min(stop-raw, stop-page -1)} else { stop-raw}
+				// panic(start, stop, stop-raw)
+				return (pageRange: range(start, stop), label: s.body)
+			})
 
 			#if hasBackground(selector(<background>).after(here()), here()) == false {
 				set text(
