@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# OS related files
+.DS_Store
+Thumbs.db
