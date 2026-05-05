@@ -7,7 +7,7 @@
 	beamer-format: (16, 9),
 	theme-background: rgb("#00305D"),
 	theme-text: white,
-	font: "Open Sans",
+	font: "Noto Sans",
 	has-section-slides: true,
 	doc
 ) = {
